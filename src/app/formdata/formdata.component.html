@@ -4,9 +4,9 @@
       <div class="col-md-8">
         <form class="row g-2" (submit)="send($event)">
           <div class="col-auto">
-            <select class="form-select bg-success">
-              <option value="ingresoOperacion" selected>+</option>
-              <option value="egresoOperacion">-</option>
+            <select [(ngModel)]="operationType" name="operationType" class="form-select" [ngClass]="{'bg-danger' : operationType == '-' , 'bg-success' : operationType == '+' }">
+              <option value="+">+</option>
+              <option value="-">-</option>
             </select>
           </div>
           <div class="col">

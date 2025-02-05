@@ -3,17 +3,17 @@
 <div class="row justify-content-center">
   <div class="p-4 rounded border border-primary text-center">
     <h4 class="mb-3">{{title}}:</h4>
-    <div class="display-3 fw-bold text-warning">{{headerData.total}}</div>
+    <div class="display-3 fw-bold text-warning">{{headerData.total | currency:'USD' }}</div>
     <div class="row mt-4 justify-content-center">
       <div class="col-md-5 text-center">
         <div class="text-uppercase">INGRESOS</div>
-        <div class="text-success h5">{{headerData.totalAvailable}}</div>
+        <div class="text-success h5">{{headerData.totalAvailable | currency:'USD' }}</div>
       </div>
       <div class="col-md-5 text-center">
         <div class="text-uppercase">EGRESOS</div>
         <div class="text-danger h5">
-          {{headerData.totalExpenses}}
-          <span class="badge bg-success ms-2">{{expensesPercen}}</span>
+          {{headerData.totalExpenses | currency:'USD'}}
+          <span class="badge bg-success ms-2">{{headerData.percentExpense }}%</span>
         </div>
       </div>
     </div>

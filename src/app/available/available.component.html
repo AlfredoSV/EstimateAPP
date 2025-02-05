@@ -1,14 +1,18 @@
-<h2 class="text-center text-primary">{{ title }}</h2>
-<ul class="list-group mt-3">
-  @for (expense of expenses; track $index) {
-  <li class="list-group-item d-flex justify-content-between align-items-center">
-    <span class="flex-grow-1">{{expense.description}}</span>
-    <span class="text-success mx-3">${{expense.amount}}</span>
-    <button class="btn btn-sm btn-danger">
-      <i class="bi bi-x-circle"></i>
-      <!-- Bootstrap Icon -->
-    </button>
-  </li>
 
-  }
-</ul>
+@if(expenses.length > 0){
+  <h2 class="text-center text-primary">{{ title }}</h2>
+  <ul class="list-group mt-3">
+    @for (expense of expenses; track $index) {
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <span class="flex-grow-1">{{ expense.description }}</span>
+      <span class="text-success mx-3">{{
+        expense.amount | currency : "USD"
+      }}</span>
+      <button (click)="delete(expense.id)" class="btn btn-sm btn-danger">
+        <i class="bi bi-x-circle"></i>
+        <!-- Bootstrap Icon -->
+      </button>
+    </li>
+    }
+  </ul>
+}

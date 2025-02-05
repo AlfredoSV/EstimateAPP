@@ -7,7 +7,7 @@ import { ExpensesComponent } from "./expenses/expenses.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, FormdataComponent, AvailableComponent, ExpensesComponent],
+  imports: [HeaderComponent, FormdataComponent, AvailableComponent, ExpensesComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
