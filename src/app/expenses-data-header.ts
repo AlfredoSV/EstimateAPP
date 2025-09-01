@@ -6,7 +6,7 @@ export class ExpensesDataHeader {
     public totalAvailable : number
   ){
     this.total = this.totalAvailable - this.totalExpenses;
-    this.percentExpense = parseFloat((Math.round(this.totalExpenses * 100) / (this.total) ? Math.ceil(this.totalExpenses * 100) / (this.total) : 0).toFixed(2)) ;
+    this.percentExpense = parseFloat((Math.round(this.totalExpenses * 100) / (this.totalAvailable) ? Math.ceil(this.totalExpenses * 100) / (this.totalAvailable) : 0).toFixed(2)) ;
   }
 
 }

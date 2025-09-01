@@ -11,37 +11,39 @@ export class EstimateService {
 
   private expenses: Expense[] = [];
 
-  estimateEventDataHeader = new EventEmitter<ExpensesDataHeader>();
-  estimateEventDeposit = new EventEmitter();
-  estimateEventOperatingExpense = new EventEmitter();
+  public estimateEventDataHeader = new EventEmitter<ExpensesDataHeader>();
+  public estimateEventDeposit = new EventEmitter<Expense[]>();
+  public estimateEventOperatingExpense = new EventEmitter<Expense[]>();
 
-  add(expense: Expense): void {
+  public add(expense: Expense): void {
     this.expenses.push(expense);
-    let data: Expense[] = this.expensesData(expense.typeExpense);
-    const dataHeader: ExpensesDataHeader = this.totalDataHeader();
-
-    if (expense.typeExpense == TypeExpense.Deposit) {
-
-      this.estimateEventDeposit.emit(data);
-
-    } else {
-      data.forEach(dat => {
-        let result: number = parseFloat((Math.round(dat.amount * 100) / (dataHeader.totalExpenses)).toFixed(2));
-        dat.expensePercent = result ? result : 0;
-      });
-      this.estimateEventOperatingExpense.emit(data);
-    }
-    this.estimateEventDataHeader.emit(dataHeader);
+    this.refreshData();
   }
 
-  expensesData(typeExpense: TypeExpense): Expense[] {
+  public deleteExpense(id: string): void {
+    this.expenses = this.expenses.filter((data) => data.id != id);
+    this.refreshData();
+  }
+
+  public expensesData(typeExpense: TypeExpense): Expense[] {
     return this.expenses.filter((expense) => expense.typeExpense == typeExpense);
   }
 
-  totalDataHeader(): ExpensesDataHeader {
+  public totalDataHeader(): ExpensesDataHeader {
     return new ExpensesDataHeader(
       this.totalAmmount(TypeExpense.OperatingExpense),
       this.totalAmmount(TypeExpense.Deposit));
+  }
+
+  private refreshData(): void {
+    let dataDeposit: Expense[] = this.expensesData(TypeExpense.Deposit);
+    let dataOperatingExpense: Expense[] = this.expensesData(TypeExpense.OperatingExpense);
+    const dataHeader: ExpensesDataHeader = this.totalDataHeader();
+    dataDeposit.forEach(expense => this.estimateData(expense));
+    this.estimateEventDeposit.emit(dataDeposit);
+    dataOperatingExpense.forEach(expense => this.estimateData(expense));
+    this.estimateEventOperatingExpense.emit(dataOperatingExpense);
+    this.estimateEventDataHeader.emit(dataHeader);
   }
 
   private totalAmmount(typeExpense: TypeExpense): number {
@@ -59,17 +61,10 @@ export class EstimateService {
       , 0);
   }
 
-  public deleteExpense(id: string): void {
-
-    this.expenses = this.expenses.filter((data) => data.id != id);
-    this.estimateEventDeposit.emit(this.expensesData(TypeExpense.Deposit));
+  private estimateData(expense: Expense) {
     let dataHeader: ExpensesDataHeader = this.totalDataHeader();
-    this.expenses.forEach(dat => {
-      let result: number = parseFloat((Math.round(dat.amount * 100) / (dataHeader.totalExpenses)).toFixed(2));
-      dat.expensePercent = result ? result : 0;
-    });
-    this.estimateEventOperatingExpense.emit(this.expensesData(TypeExpense.OperatingExpense));
-    this.estimateEventDataHeader.emit(this.totalDataHeader());
+    let result: number = parseFloat((Math.round(expense.amount * 100) / (dataHeader.totalAvailable)).toFixed(2));
+    expense.expensePercent = result ? result : 0;
   }
 
 }
