@@ -16,11 +16,12 @@ import { CommonModule } from '@angular/common';
 
 export class FormdataComponent {
 
-  public description: string = "";
-  public amount: number = 0;
-  operationType : string = '+';
+  protected description: string = "";
+  protected amount: number = 0;
+  protected operationType : string = '+';
 
   constructor(public estimateService: EstimateService) { }
+
   send($event: Event) {
 
     $event.preventDefault();

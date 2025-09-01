@@ -12,5 +12,5 @@ import { ExpensesComponent } from "./expenses/expenses.component";
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'estimate-app';
+  protected readonly title = 'estimate-app';
 }

@@ -38,12 +38,13 @@ export class EstimateService {
   private refreshData(): void {
     let dataDeposit: Expense[] = this.expensesData(TypeExpense.Deposit);
     let dataOperatingExpense: Expense[] = this.expensesData(TypeExpense.OperatingExpense);
-    const dataHeader: ExpensesDataHeader = this.totalDataHeader();
+
     dataDeposit.forEach(expense => this.estimateData(expense));
     this.estimateEventDeposit.emit(dataDeposit);
     dataOperatingExpense.forEach(expense => this.estimateData(expense));
     this.estimateEventOperatingExpense.emit(dataOperatingExpense);
-    this.estimateEventDataHeader.emit(dataHeader);
+
+    this.estimateEventDataHeader.emit(this.totalDataHeader());
   }
 
   private totalAmmount(typeExpense: TypeExpense): number {

@@ -11,22 +11,21 @@ import { ExpensesDataHeader } from '../expenses-data-header';
   styleUrl: './expenses.component.css'
 })
 export class ExpensesComponent {
-  delete(id: string) {
-    this.estimateService.deleteExpense(id);
-  }
-  expenses: Expense[] = [];
-  title: string = "Egresos";
-  expensaeData!: ExpensesDataHeader;
-  constructor(public estimateService: EstimateService) {
 
-  }
+  protected expenses: Expense[] = [];
+  protected readonly title: string = "Egresos";
+
+  constructor(public estimateService: EstimateService) {}
 
   ngOnInit() {
     this.expenses = this.estimateService.expensesData(TypeExpense.OperatingExpense);
     this.estimateService.estimateEventOperatingExpense.subscribe((data) => {
       this.expenses = data;
     })
-
-    this.expensaeData = this.estimateService.totalDataHeader();
   }
+
+  delete(id: string) {
+    this.estimateService.deleteExpense(id);
+  }
+
 }

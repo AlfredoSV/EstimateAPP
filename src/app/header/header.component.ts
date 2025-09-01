@@ -12,8 +12,8 @@ import { CommonModule } from '@angular/common';
 })
 export class HeaderComponent {
 
-  title : string = 'Presupuesto Disponible';
-  headerData! : ExpensesDataHeader;
+  protected readonly title : string = 'Presupuesto Disponible';
+  protected headerData! : ExpensesDataHeader;
 
   constructor(private estimateService: EstimateService){}
 

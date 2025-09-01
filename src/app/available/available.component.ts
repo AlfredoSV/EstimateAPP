@@ -11,11 +11,10 @@ import { CommonModule } from '@angular/common';
   styleUrl: './available.component.css'
 })
 export class AvailableComponent {
-  delete(id: string) {
-    this.estimateService.deleteExpense(id);
-  }
-  expenses!: Expense[];
-  title: string = "Ingresos";
+
+  protected expenses!: Expense[];
+  protected readonly title: string = "Ingresos";
+
   constructor(public estimateService: EstimateService) { }
 
   ngOnInit() {
@@ -24,4 +23,9 @@ export class AvailableComponent {
       this.expenses = data;
     })
   }
+
+  delete(id: string) {
+    this.estimateService.deleteExpense(id);
+  }
+
 }
